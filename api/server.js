@@ -34,6 +34,17 @@ server.get('/api/users/:id', async (req, res) => {
     }
     })
 
+//Update user
+server.put('/api/users/:id', async (req, res) => {
+    const user = await db.update(req.params.id, req.body)
+    if(user){
+        res.json(user)
+    } else {
+        res.status(404).json({
+            message: 'user does not exist'
+        })
+    }
+})
 
 //Delete user
 server.delete('/api/users/:id', async (req, res) => {
