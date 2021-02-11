@@ -16,14 +16,13 @@ let users = initializeUsers()
 // DATABASE ACCESS FUNCTIONS
 const find = () => {
   // SELECT * FROM users;
-  // return Promise.resolve(users)
-  return users
+  return Promise.resolve(users)
 }
 
 const findById = id => {
   // SELECT * FROM users WHERE id = 1;
   const user = users.find(d => d.id === id)
-  return user
+  return Promise.resolve(user)
 }
 
 const insert = ({ name, bio }) => {

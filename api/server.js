@@ -7,26 +7,44 @@ const server = express()
 
 server.use(express.json())
 
+//Homepage
 server.get('/', (req,res) => {
     res.json({
         message: 'I am the homepage'
     })
 })
 
-server.get('/api/users', (req, res) => {
-    const users = db.find()
-    res.json(users)
+//Get all users
+server.get('/api/users', async (req, res) => {
+    db.find()
+        .then(users => {
+            res.json(users)
+        })
 })
 
-server.get('/api/users/:id', (req, res) => {
-    const user = db.findById(req.params.id)
-    if(user){
+//Get user
+server.get('/api/users/:id', async (req, res) => {
+    try {
+        const user = await db.findById(req.params.id)
         res.json(user)
-    } else {
+    } catch (err) {
         res.status(404).json({
             message: 'user not found'
         })
     }
+    })
+
+
+//Delete user
+server.delete('/api/users/:id', async (req, res) => {
+    const user = await db.remove(req.params.id)
+    if(!user){
+        res.status(404).json({
+            message: 'User does not exist'
+        })
+    } else {
+        res.status(204).end()
+    }
 })
 
-module.exports = server; // EXPORT YOUR SERVER instead of {}
+module.exports = server; // EXPORT YOUR SERVER instead of 
