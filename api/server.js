@@ -22,16 +22,17 @@ server.get('/api/users', async (req, res) => {
         })
 })
 
+
+const notFound = { message: 'user not found'}
+
 //Get user
 server.get('/api/users/:id', async (req, res) => {
-    try {
         const user = await db.findById(req.params.id)
-        res.json(user)
-    } catch (err) {
-        res.status(404).json({
-            message: 'user not found'
-        })
-    }
+        if(user){
+            res.json(user)
+        } else {
+            res.status(404).json(notFound)
+        }
     })
 
 //Update user
@@ -40,8 +41,21 @@ server.put('/api/users/:id', async (req, res) => {
     if(user){
         res.json(user)
     } else {
-        res.status(404).json({
-            message: 'user does not exist'
+        res.status(404).json(notFound)
+    }
+})
+
+//Insert user
+server.post('/api/users/', async (req, res) => {
+    const newUser = await db.insert({
+        name: req.body.name,
+        bio: req.body.bio
+    })
+    if(newUser){
+        res.status(201).json(newUser)
+    } else {
+        res.json({
+            message: 'there has been an error'
         })
     }
 })
@@ -49,12 +63,10 @@ server.put('/api/users/:id', async (req, res) => {
 //Delete user
 server.delete('/api/users/:id', async (req, res) => {
     const user = await db.remove(req.params.id)
-    if(!user){
-        res.status(404).json({
-            message: 'User does not exist'
-        })
-    } else {
+    if(user){
         res.status(204).end()
+    } else {
+        res.status(404).json(notFound)
     }
 })
 
