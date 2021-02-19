@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "dotenv": "^8.2.0"
   },
   "repository": {
     "type": "git",
