@@ -24,5 +24,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LambdaSchool/node-api1-project.git"
+  },
+  "engines": {
+    "node": "14.11.0"
   }
 }
