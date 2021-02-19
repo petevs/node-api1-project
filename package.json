@@ -2,7 +2,7 @@
   "name": "node-api1-project",
   "version": "1.0.0",
   "description": "Node API 1 Project Code",
-  "main": "index.js",
+  "server": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "cross-env NODE_ENV=testing jest --watch --verbose --runInBand",
